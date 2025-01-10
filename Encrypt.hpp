@@ -3,22 +3,20 @@
 
 #include "package.hpp"
 
-
 class Encrypt {
 protected:
     std::string _plain;
     std::string _cipher;
 
 public:
-    virtual ~Encrypt() = default;  // Destructeur virtuel pour la gestion correcte de la mémoire
+    virtual ~Encrypt() = default;
 
-    virtual std::string get_plain() const = 0;
-    virtual std::string get_cipher() const = 0; 
+    std::string get_plain() const;
+    std::string get_cipher() const;
     virtual std::string encode(std::string plain) = 0; 
-    virtual std::string decode(std::string cipher) = 0;
-    virtual std::string read(const std::string &filename) = 0;
-    virtual void write(std::string filename) = 0;
+    virtual std::string decode(std::string cipher) = 0; 
+    std::string read(const std::string& filename);
+    void write(std::string filename);
 };
-
 
 #endif // Encrypt_hpp

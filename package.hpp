@@ -6,5 +6,6 @@
 #include <vector>
 #include <fstream>
 #include <sstream>  // Pour l'utilisation de stringstream
+#include <map>
 
 #endif // package_hpp

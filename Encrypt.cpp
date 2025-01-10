@@ -1,12 +1,11 @@
 #include "Encrypt.hpp"
 
-// Implémentation de CaesarEncrypt
 
-std::string Encrypt::get_plain() {
+std::string Encrypt::get_plain() const{
     return _plain;
 }
 
-std::string Encrypt::get_cipher() {
+std::string Encrypt::get_cipher() const{
     return _cipher;
 }
 
@@ -28,26 +27,24 @@ std::string Encrypt::decode(std::string cipher) {
     return _plain;
 }
 
-// Lecture d'un fichier entier dans _plain
-void Encrypt::read(std::string filename) {
-    std::ifstream file(filename);
-    if (file.is_open()) {
-        std::stringstream buffer;
-        buffer << file.rdbuf();  // Lit tout le contenu du fichier
-        _plain = buffer.str();   // Stocke le contenu dans _plain
-        file.close();
-    } else {
-        std::cerr << "Erreur lors de l'ouverture du fichier pour la lecture." << std::endl;
+std::string Encrypt::read(const std::string& filename) {
+    std::ifstream fichier(filename); // Ouverture du fichier
+    if (!fichier) { // Vérifie si le fichier est ouvert correctement
+        std::cerr << "Erreur d'ouverture du fichier: " << filename << std::endl;
+        return ""; // Retourne une chaîne vide en cas d'erreur
     }
-}
 
-// Écriture dans un fichier (création du fichier s'il n'existe pas)
+    std::stringstream buffer;
+    buffer << fichier.rdbuf(); // Lit tout le contenu du fichier dans le buffer
+    return buffer.str(); // Retourne le contenu du fichier sous forme de string
+}
 void Encrypt::write(std::string filename) {
-    std::ofstream file(filename, std::ios::out | std::ios::trunc);  // Crée le fichier s'il n'existe pas, écrase s'il existe
+    std::ofstream file(filename);
     if (file.is_open()) {
-        file << _cipher;  // Écrit le texte chiffré dans le fichier
+        file << _cipher;  // On écrit le texte chiffré dans le fichier
         file.close();
     } else {
         std::cerr << "Erreur lors de l'ouverture du fichier pour l'écriture." << std::endl;
     }
 }
+
